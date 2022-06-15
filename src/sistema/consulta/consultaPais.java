@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import sistema.conexion.conexion;
+import sistema.modelo.modPaciente;
 import sistema.modelo.modPais;
 
 
@@ -23,85 +24,137 @@ import sistema.modelo.modPais;
  *
  * @author Administrator
  */
-public class consultaPais extends conexion {
+    public class consultaPais extends conexion {
+
+
+    public boolean registrar(modPais tpais) {
+        PreparedStatement ps = null;
+        Connection con = getConexion();
+        String sql = "INSERT INTO pruebaverdadera2.pais (idPais, Descripcion) VALUES(?,?)";
+         try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, tpais.getIdPais());
+            ps.setString(2, tpais.getDescripcion());
+            
+            
+            ps.execute();
+            return true;
+        } catch (SQLException e) {
+            System.err.println(e);
+            return false;
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                System.err.println(e);
+            }
+        }
+    }
+    public boolean buscar(modPais tpais) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Connection con = getConexion();
+        String sql = "SELECT * FROM pruebaverdadera2.pais WHERE idPais = ? ";
+        try {
+            ps = con.prepareStatement(sql);
+      
+            ps.setInt(1, tpais.getIdPais());
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                tpais.setDescripcion(rs.getString("Descripcion"));
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            System.err.println(e);
+            return false;
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                System.err.println(e);
+            }
+        }
+    }
     
-    conexion metodoconexion = new conexion();
+    public boolean eliminar(modPais tpais) {
+        PreparedStatement ps = null;
+        Connection con = getConexion();
+
+        String sql = "DELETE FROM pruebaverdadera2.pais WHERE idPais = ?";
+
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, tpais.getIdPais());
+            ps.execute();
+            return true;
+        } catch (SQLException e) {
+            System.err.println(e);
+            return false;
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                System.err.println(e);
+            }
+        }
+    }
     
-//    public void consultar_paises(JComboBox combopaises) {
-//
-//         objeto del tipo Connection
-//        java.sql.Connection con = null;
-//
-//        creamos la consulta SQL
-//        String SQL = "SELECT * FROM pruebabasetercerparcial2.pais";
-//
-//        establecemos el bloque de try-catch-finally
-//        try {
-//            establecer conexion con la bd
-//            con = metodoconexion.getConexion();
-//            preparamos la consulta sql
-//            PreparedStatement pst = con.prepareStatement(SQL);
-//            ejecutamos la consulta
-//            ResultSet resultado = pst.executeQuery();
-//
-//            llenamos nuestro combo
-//            combopaises.addItem("Seleccione una opcion");
-//            
-//            while (resultado.next()) {
-//                
-//                combopaises.addItem(resultado.getString("Descripcion"));
-//            }
-//            
-//        } catch (Exception e) {
-//            
-//            JOptionPane.showMessageDialog(null, e);
-//            
-//        } finally {
-//            
-//            if (con != null) {
-//                
-//                try {
-//                    con.close();
-//                } catch (SQLException ex) {
-//                    
-//                    JOptionPane.showMessageDialog(null, ex);
-//                }
-//            }
-//            
-//        }
-//        
-//    }
+    public boolean modificar(modPais tpais) {
+        PreparedStatement ps = null;
+        Connection con = getConexion();
+        String sql = "UPDATE pruebaverdadera2.pais SET Descripcion=? WHERE idPais=?";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, tpais.getDescripcion());
+            ps.setInt(2, tpais.getIdPais());
+            ps.execute();
+            return true;
+        } catch (SQLException e) {
+            System.err.println(e);
+            return false;
+        } finally {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                System.err.println(e);
+            }
+        }
+    }
     
-//    public Vector<modPais> mostrarPais() {
-//
-//        PreparedStatement ps = null;
-//        ResultSet rs = null;
-//        java.sql.Connection con = null;
-//        con = metodoconexion.getConexion();
-//
-//        Vector<modPais> datos = new Vector<modPais>();
-//        modPais dat = null;
-//        try {
-//
-//            String sql = "SELECT * FROM pruebabasetercerparcial2.pais";
-//            ps = con.prepareStatement(sql);
-//            rs = ps.executeQuery();
-//
-//            dat = new modPais();
-//            dat.setIdPais(0);
-//            dat.setDescripcion("Selecciona pais");
-//            datos.add(dat);
-//
-//            while (rs.next()) {
-//                dat = new modPais();
-//                dat.setIdPais(rs.getInt("idPais"));
-//                dat.setDescripcion(rs.getString("Descripcion"));
-//                datos.add(dat);
-//            }
-//            rs.close();
-//        } catch (SQLException ex) {
-//            System.err.println("Error consulta :" + ex.getMessage());
-//        }
-//        return datos;
-//    }
+    
+    
+    public Vector<modPais> mostrarPais() {
+
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        conexion conn = new conexion();
+        Connection con = conn.getConexion();
+
+        Vector<modPais> datos = new Vector<modPais>();
+        modPais dat = null;
+        try {
+
+            String sql = "SELECT * FROM pruebaverdadera2.pais";
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            dat = new modPais();
+            dat.setIdPais(0);
+            dat.setDescripcion("Selecciona pais");
+            datos.add(dat);
+
+            while (rs.next()) {
+                
+                dat = new modPais();
+                dat.setIdPais(rs.getInt("idPais"));
+                dat.setDescripcion(rs.getString("Descripcion"));
+                datos.add(dat);
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            System.err.println("Error consulta :" + ex.getMessage());
+        }
+        return datos;
+    }
 }

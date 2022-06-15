@@ -90,7 +90,7 @@ public class controladorPaciente implements ActionListener {
            
         
         if (e.getSource() == frmP.btnInsertar) {
-            String s = frmP.comboPais.getSelectedItem().toString();
+
             
             paciente.setIdPaciente(null);
             paciente.setNombre(frmP.txtNombre.getText());
@@ -149,7 +149,7 @@ public class controladorPaciente implements ActionListener {
             paciente.setIdPais(frmP.comboPais.getSelectedIndex());
             paciente.setIdPaciente(frmP.txtIdPaciente.getText());
             
-            if (cPaciente.modificar(paciente,frmP.txtNombre.getText(),frmP.txtApellido.getText(),frmP.txtDocumento.getText(),frmP.txtDireccion.getText(),frmP.txtTelefono.getText(),frmP.txtCorreo.getText(), frmP.comboCiudad.getSelectedItem().toString(),frmP.comboPais.getSelectedItem().toString(), frmP.txtIdPaciente.getText())) {
+            if (cPaciente.modificar(paciente,frmP.txtNombre.getText(),frmP.txtApellido.getText(),frmP.txtDocumento.getText(),frmP.txtDireccion.getText(),frmP.txtTelefono.getText(),frmP.txtCorreo.getText(), frmP.comboCiudad.getSelectedIndex(),frmP.comboPais.getSelectedIndex(), frmP.txtIdPaciente.getText())) {
                 JOptionPane.showMessageDialog(null, "Registro Modificado");
                 limpiar();
             } else {
@@ -177,8 +177,9 @@ public class controladorPaciente implements ActionListener {
             frmP.txtDireccion.setText(paciente.getDireccion());
             frmP.txtTelefono.setText(paciente.getTelefono());
             frmP.txtCorreo.setText(paciente.getCorreo());
-            frmP.comboCiudad.setSelectedItem(paciente.getIdCiudad());
-            frmP.comboPais.setSelectedItem(paciente.getIdPais());
+            frmP.comboPais.setSelectedIndex(paciente.getIdPais());
+            frmP.comboCiudad.setSelectedIndex(paciente.getIdCiudad());
+     
          }
       } 
      
@@ -190,8 +191,9 @@ public class controladorPaciente implements ActionListener {
             frmP.txtDireccion.setText("");
             frmP.txtTelefono.setText("");
             frmP.txtCorreo.setText("");
-            frmP.comboPais.setSelectedItem("");
-            frmP.comboCiudad.setSelectedItem("");
+            frmP.comboPais.setSelectedItem(null);
+            frmP.comboCiudad.setSelectedItem(null);
+            
          }
        public void deshabilitar_id(){
           frmP.txtIdPaciente.setEnabled(false);

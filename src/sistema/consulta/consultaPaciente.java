@@ -110,7 +110,7 @@ public class consultaPaciente extends conexion{
         }
     }
     
-    public boolean modificar(modPaciente paciente, String Nombre, String Apellido, String Documento, String Direccion, String Telefono, String Correo, String idCiudad, String idPais, String IdPaciente ) {
+    public boolean modificar(modPaciente paciente, String Nombre, String Apellido, String Documento, String Direccion, String Telefono, String Correo, int idCiudad, int idPais, String IdPaciente ) {
         PreparedStatement ps = null;
         Connection con = getConexion();
         String sql = "UPDATE pruebaverdadera2.paciente SET Nombre=?, Apellido=?,Documento=?,"

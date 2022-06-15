@@ -42,40 +42,6 @@ public class modPais {
     }
 
     
-//    conexion metodoconexion = new conexion();
-//    public Vector<modPais> mostrarPais() {
-//
-//        PreparedStatement ps = null;
-//        ResultSet rs = null;
-//        java.sql.Connection con = null;
-//        con = metodoconexion.getConexion();
-//
-//        Vector<modPais> datos = new Vector<modPais>();
-//        modPais dat = null;
-//        try {
-//
-//            String sql = "SELECT * FROM pruebabasetercerparcial2.pais";
-//            ps = con.prepareStatement(sql);
-//            rs = ps.executeQuery();
-//
-//            dat = new modPais();
-//            dat.setIdPais(0);
-//            dat.setDescripcion("Selecciona pais");
-//            datos.add(dat);
-//
-//            while (rs.next()) {
-//                dat = new modPais();
-//                dat.setIdPais(rs.getInt("idPais"));
-//                dat.setDescripcion(rs.getString("Descripcion"));
-//                datos.add(dat);
-//            }
-//            rs.close();
-//        } catch (SQLException ex) {
-//            System.err.println("Error consulta :" + ex.getMessage());
-//        }
-//        return datos;
-//    }
-//    
     public Vector<modPais> mostrarPais() {
 
         PreparedStatement ps = null;

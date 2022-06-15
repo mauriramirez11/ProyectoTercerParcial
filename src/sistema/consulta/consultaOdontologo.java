@@ -107,7 +107,7 @@ public class consultaOdontologo extends conexion {
         }
     }
     
-    public boolean modificar(modOdontologo odontologo, String Nombre, String Apellido, String Telefono, String Correo, String Documento, String Pais_Descripcion, String Ciudad_Descripcion, String Sucursal_Descripcion, String IdOdontologo ) {
+    public boolean modificar(modOdontologo odontologo, String Nombre, String Apellido, String Telefono, String Correo, String Documento, int Pais_Descripcion, int Ciudad_Descripcion, int Sucursal_Descripcion, String IdOdontologo ) {
         PreparedStatement ps = null;
         Connection con = getConexion();
         String sql = "UPDATE pruebaverdadera2.odontologo SET Nombre=?, Apellido=?,Telefono=?,"

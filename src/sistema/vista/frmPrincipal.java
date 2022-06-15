@@ -5,12 +5,20 @@
  */
 package sistema.vista;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import sistema.consulta.consultaCiudad;
 import sistema.consulta.consultaOdontologo;
 import sistema.consulta.consultaPaciente;
+import sistema.consulta.consultaPais;
+import sistema.controlador.controladorMantenimiento;
 import sistema.controlador.controladorOdontologo;
 import sistema.controlador.controladorPaciente;
+import sistema.controlador.controladorPais;
+import sistema.modelo.modCiudad;
 import sistema.modelo.modOdontologo;
 import sistema.modelo.modPaciente;
+import sistema.modelo.modPais;
 
 /**
  *
@@ -23,6 +31,11 @@ public class frmPrincipal extends javax.swing.JFrame {
      */
     public frmPrincipal() {
         initComponents();
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        int height = pantalla.height;
+        int width = pantalla.width;
+        pantalla.setSize(width/2, height/2);
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -39,8 +52,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnPacientes = new javax.swing.JButton();
         btnOdontologos = new javax.swing.JButton();
-        btnTabla = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnMantenimiento = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -65,42 +77,43 @@ public class frmPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnTabla.setText("Datos ingresados");
-
-        jButton4.setText("Sobre nosotros");
+        btnMantenimiento.setText("Mantenimiento");
+        btnMantenimiento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMantenimientoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(168, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnTabla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnOdontologos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnPacientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(174, 174, 174))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(190, 190, 190))))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(btnPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(174, 174, 174))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addGap(191, 191, 191)))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(btnMantenimiento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+                        .addComponent(btnOdontologos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(90, 90, 90)
+                .addGap(59, 59, 59)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(83, 83, 83)
+                .addGap(55, 55, 55)
                 .addComponent(btnPacientes)
-                .addGap(70, 70, 70)
+                .addGap(91, 91, 91)
                 .addComponent(btnOdontologos)
-                .addGap(70, 70, 70)
-                .addComponent(btnTabla)
-                .addGap(70, 70, 70)
-                .addComponent(jButton4)
-                .addGap(90, 90, 90))
+                .addGap(69, 69, 69)
+                .addComponent(btnMantenimiento)
+                .addContainerGap(192, Short.MAX_VALUE))
         );
 
         jLabel2.setFont(new java.awt.Font("Roboto", 0, 36)); // NOI18N
@@ -114,29 +127,33 @@ public class frmPrincipal extends javax.swing.JFrame {
         bgLayout.setHorizontalGroup(
             bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgLayout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
+                .addContainerGap(140, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(97, 97, 97)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         bgLayout.setVerticalGroup(
             bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(bgLayout.createSequentialGroup()
-                .addGap(275, 275, 275)
+                .addGap(259, 259, 259)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bgLayout.createSequentialGroup()
+                .addGap(0, 1, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(bg, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(bg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -151,6 +168,7 @@ public class frmPrincipal extends javax.swing.JFrame {
         controladorPaciente ctlPaciente = new controladorPaciente(paciente, cPaciente, frmP);
         ctlPaciente.iniciar();
         frmP.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnPacientesActionPerformed
 
     private void btnOdontologosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOdontologosActionPerformed
@@ -160,7 +178,27 @@ public class frmPrincipal extends javax.swing.JFrame {
         controladorOdontologo ctlOdontologo = new controladorOdontologo(odontologo, cOdontologo, frmO);
         ctlOdontologo.iniciar();
         frmO.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnOdontologosActionPerformed
+
+    private void btnMantenimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMantenimientoActionPerformed
+        
+        frmMantenimiento frmMan = new frmMantenimiento();
+       
+        consultaPais cPais = new consultaPais();
+        consultaCiudad cCiudad = new consultaCiudad();
+        modPais tpais = new modPais();
+        modCiudad ciudad = new modCiudad();
+        
+        controladorMantenimiento conMante = new controladorMantenimiento(tpais, ciudad, cPais, cCiudad, frmMan);
+        conMante.iniciar();
+        frmMan.setVisible(true);
+        this.dispose();
+        
+        
+        
+
+    }//GEN-LAST:event_btnMantenimientoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -199,10 +237,9 @@ public class frmPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel bg;
+    private javax.swing.JButton btnMantenimiento;
     public javax.swing.JButton btnOdontologos;
     public javax.swing.JButton btnPacientes;
-    public javax.swing.JButton btnTabla;
-    public javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

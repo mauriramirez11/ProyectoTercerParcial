@@ -131,7 +131,7 @@ public class controladorOdontologo implements ActionListener {
             odontologo.setIdSucursal(frmO.comboSucursal.getSelectedIndex());
             odontologo.setIdOdontologo(frmO.txtIdOdontologo.getText());
             
-            if (cOdontologo.modificar(odontologo,frmO.txtNombre.getText(),frmO.txtApellido.getText(),frmO.txtTelefono.getText(),frmO.txtCorreo.getText(),frmO.txtDocumento.getText(), frmO.comboPais.getSelectedItem().toString(), frmO.comboCiudad.getSelectedItem().toString(),frmO.comboSucursal.getSelectedItem().toString(), frmO.txtIdOdontologo.getText())) {
+            if (cOdontologo.modificar(odontologo,frmO.txtNombre.getText(),frmO.txtApellido.getText(),frmO.txtTelefono.getText(),frmO.txtCorreo.getText(),frmO.txtDocumento.getText(), frmO.comboPais.getSelectedIndex(), frmO.comboCiudad.getSelectedIndex(),frmO.comboSucursal.getSelectedIndex(), frmO.txtIdOdontologo.getText())) {
                 JOptionPane.showMessageDialog(null, "Registro Modificado");
                 limpiar();
             } else {
